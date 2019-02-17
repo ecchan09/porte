@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-sm-3">
+    <div class="haikei">
+
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <h1>チャットルーム</h1>
+    <!-- <link rel="stylesheet" type="text/scss" href="stylesheets/rooms.scss"> -->
+    <% if user_signed_in? %>
+      <h3><%= @owner.name %>さんとのチャット</h3>
+      <div class="line-bc">
+        <div class="chat-field">
+
+          <% @messages.each do |m| %>
+            <!-- メッセージがOwnerによるものだったら -->
+            <% if m.is_user %>
+            <!-- メッセージを右に寄せる -->
+            <!-- ユーザーによるコメント -->
+              <div class="mycomment">
+                <p>
+                  <%= m.content %>
+                </p>
+              </div>
+
+
+              <!-- メッセージがOwnerによるものだったら -->
+            <% else %>
+              <div class="chatting">
+                <div class="says">
+                  <p><%= m.content %></p>
+                </div>
+              </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <% elsif owner_signed_in?%>
+    <h3><%= @user.name %>さんとのチャットルーム</h3>
+      <div class="line-bc">
+        <div class="chat-field">
+
+            <% @messages.each do |m| %>
+              <!-- メッセージがUserによるものだったら -->
+              <% if m.is_user %>
+            <!-- メッセージを左に寄せる -->
+        <div class="chatting">
+                <div class="says">
+                  <p><%= m.content %></p>
+                </div>
+　　　　</div>
+              <% else %>
+                <div class="mycomment">
+                  <p><%= m.content %></p>
+                </div>
+              <% end %>
+            <% end %>
+      </div>
+      </div>
+    <% end %>
+
+
+</div>
+  <div class="col-sm-3">
+    <div class="haikei">
+    </div>
+  </div>
+</div>
+
+  <div id="footer">
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
+        <%= form_for [@room, @message] do |f| %>
+          <%= f.text_field :content ,:class => "form-control"%>
+          <%= f.submit "メッセージを送る"%>
+        <% end %>
+      </div>
+      <div class="col-sm-3"></div>
+    </div>
+
+  </div>

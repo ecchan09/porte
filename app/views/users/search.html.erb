@@ -1,0 +1,24 @@
+<div class="row">
+<% @search.each do |owner| %>
+ <div class="col-sm-4">
+  <div class="card">
+  <%= image_tag owner.picture.to_s, :class =>"gazou" %>
+   <div class="card-body">
+       <h5 class="card-title"><%= owner.name %></h5>
+       <p class="card-text">最寄り駅:<%= owner.station %></p>
+       <p class="card-text">年齢:<%= owner.age %></p>
+       <p class="card-text">性別:
+         <% if owner.gender == 1 %>
+         男性
+         <% elsif owner.gender == 2 %>
+         女性
+         <% end %>
+       </p>
+       <p class="card-text">自己紹介:<%= owner.introduction %></p>
+　　　　<%= link_to "詳細へ", owner_path(id: owner.id) , :class => "btn btn-info"%>
+  <br>
+    </div>
+   </div>
+  </div>
+<% end %>
+</div>

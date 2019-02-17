@@ -1,0 +1,141 @@
+
+<link rel="stylesheet" type="text/css" href="stylesheets/application.css">
+
+<!--Userでログインしてたら-->
+<% if user_signed_in? %>
+<div class="padding">
+  <!-- ユーザーがログインしてます -->
+  <br>
+  <h2>オーナー一覧</h2>
+  <br>
+</div>
+
+<div class="kennsaku">
+<h3>近くに住む犬を駅名で検索</h3>
+
+　<%= form_tag(controller:"tops",action:"search") do %>
+　<%= text_field_tag :search %>
+　<%= submit_tag 'Search',:station => nil %>
+　<% end %>
+
+
+　<% @search.each do |owner| %>
+　<h6>最寄り駅:<%= owner.station %></h6>
+　<h6>名前:<%= owner.name %></h6>
+　<%= "======================" %>
+　<br>
+　<% end %>
+
+</div>
+
+
+  <div class="row">
+    <% @owners.each do |owner| %>
+      <div class="col-sm-4">
+        <div class="card">
+
+          <%= image_tag owner.picture.to_s, :class =>"gazou" %>
+
+          <div class="card-body">
+            <h5 class="card-title"><%= owner.name %></h5>
+            <p class="card-text">年齢：<%= owner.age %></p>
+            <p class="card-text">性別：
+              <% if owner.gender == 1 %>
+                男性
+              <% elsif owner.gender == 2 %>
+                女性
+              <% end %>
+            </p>
+            <%= link_to "詳細へ", owner_path(id: owner.id) , :class => "btn btn-info"%>
+            <% if @owner_ids.include?(owner.id) %>
+              <br>
+              <%= link_to "チャットへ", room_path(current_user.rooms.find_by(owner_id: owner.id)) , :class => "btn btn-warning"%><br>
+            <% else %>
+              <%= form_for Room.new do |f| %>
+                <%= f.hidden_field :owner_id, :value => owner.id %>
+                <%= f.submit "チャットを始める" , :class => "btn btn-secondary"%>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<!-- もしチャットルームがあったらそのチャットページへ。なければ新たなチャットルームを作成 -->
+<!--オーナーでログインしてたら-->
+<% elsif owner_signed_in? %>
+<div class="padding">
+  <h2>ユーザー一覧</h2>
+  <br>
+  <!-- オーナーがログイン中 -->
+</div>
+  <div class="row">
+    <% @users.each do |user| %>
+      <div class="col-sm-4">
+        <div class="card">
+          <%= image_tag user.picture.to_s, :class =>"gazou" %>
+          <div class="card-body">
+            <h5 class="card-title"><%= user.name %></h5>
+            <p class="card-text">年齢：<%= user.age %></p>
+            <p class="card-text">性別：
+              <% if user.gender == 1 %>
+                男性
+              <% elsif user.gender == 2 %>
+                女性
+              <% end %>          　　
+            </p>
+            <br>
+            <%= link_to "詳細へ", user_path(id: user.id) , :class => "btn btn-info"%>
+
+            <!-- もしチャットルームがあったらそのチャットページへ。なければ新たなチャットルームを作成 -->
+            <% if @user_ids.include?(user.id) %>
+              <br>
+              <%= link_to "チャットへ", room_path(current_owner.rooms.find_by(user_id: user.id)) , :class => "btn btn-warning"%><br>
+            <% else %>
+              <%= form_for Room.new do |f| %>
+                <%= f.hidden_field :user_id, :value => user.id %>
+                <%= f.submit "チャットを始める" , :class => "btn btn-secondary"%>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+
+  <!--ログインしてなかったら-->
+  <div class="kennsaku">
+  <h3>近くに住む犬を駅名で検索</h3>
+
+  <%= form_tag(controller:"tops",action:"search") do %>
+  <%= text_field_tag :search %>
+  <%= submit_tag 'Search',:station => nil %>
+  <% end %>
+
+
+  <% @search.each do |owner| %>
+  <h6>最寄り駅:<%= owner.station %></h6>
+  <h6>名前:<%= owner.name %></h6>
+  <%= "======================" %>
+  <br>
+  <% end %>
+
+  </div>
+
+
+
+  <div class="example">
+
+    <h1>Porte</h1>
+
+    <div>
+      <%= image_tag('porteimage4.jpg',:width =>900) %>
+    </div>
+  </div>
+
+  <div class="setumei">
+    <%= image_tag 'setumei.jpg', :class =>"setumei" %>
+  </div>
+<% end %>

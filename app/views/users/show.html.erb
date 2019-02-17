@@ -1,0 +1,24 @@
+<div class="padding">
+  <h1>ユーザー詳細</h1>
+</div>
+
+<div class="box5">
+<div class="user">
+<p><%= image_tag user.picture.to_s, :class =>"gazou" %></p>
+<p>名前：<%= @user.name %></p>
+<p>年齢：<%= @user.age %></p>
+<p>性別：
+<% if @user.gender == 1 %>
+男性
+<% elsif @user.gender == 2 %>
+女性
+<% end %>
+</p>
+<p>職業：<%= @user.job %></p>
+<p>自己紹介：<%= @user.introduction %></p>
+</div>
+</div>
+
+<div class="padding">
+<%= link_to "ユーザー一覧に戻る", root_path %>
+</div>

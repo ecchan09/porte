@@ -1,0 +1,56 @@
+<h2>オーナー新規登録</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :Eメールアドレス %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :パスワード %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> 文字以上)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :パスワード再入力 %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :名前 %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :年齢 %><br />
+    <%= f.number_field :age %>
+  </div>
+  <div class="field">
+    <%= f.label :性別 %><br />
+    <label> <%= f.radio_button :gender,1 %> 男</label>
+    <label> <%= f.radio_button :gender,2 %> 女</label>
+  </div>
+  <div class="field">
+    <%= f.label :最寄り駅 %><br />
+    <%= f.select :station, [["東京", "東京"], ["有楽町", "有楽町"], ["新橋", "新橋"], ["浜松町", "浜松町"], ["田町", "田町"], ["高輪ゲートウェイ", "高輪ゲートウェイ"], ["品川", "品川"], ["大崎", "大崎"], ["五反田", "五反田"], ["目黒", "目黒"], ["恵比寿", "恵比寿"], ["渋谷", "渋谷"], ["原宿", "原宿"], ["代々木", "代々木"], ["新宿", "新宿"], ["新大久保", "新大久保"], ["高田馬場", "高田馬場"], ["目白", "目白"], ["池袋", "池袋"], ["大塚", "大塚"], ["巣鴨", "巣鴨"], ["駒込", "駒込"], ["田端", "田端"], ["西日暮里", "西日暮里"], ["日暮里", "日暮里"], ["鶯谷", "鶯谷"], ["上野", "上野"], ["御徒町", "御徒町"], ["秋葉原", "秋葉原"], ["神田", "神田"]] %>
+  </div>
+  <div class="field">
+    <%= f.label :自己紹介コメント %><br />
+    <%= f.text_field :introduction %>
+  </div>
+  <div class="field">
+    <%= f.label :愛犬の写真 %><br />
+    <%= f.file_field :picture, id: :post_picture %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit "登録" %>
+  </div>
+<% end %>
+
+<%= render "owners/shared/links" %>
